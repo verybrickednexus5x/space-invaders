@@ -1,4 +1,4 @@
-**micro:bit Space Invaders**
+# micro:bit Space Invaders
 
 This repository contains a version of the classic Space Invaders game adapted for the BBC micro:bit platform.
 
