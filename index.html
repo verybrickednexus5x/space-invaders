@@ -1,80 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>micro:bit Space Invaders</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: #333;
-      text-decoration: none;
-      padding: 10px;
-      margin: 5px;
-    }
-    nav a:hover {
-      background-color: #333;
-      color: #fff;
-    }
-    main {
-      padding: 20px;
-    }
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - BBC Micro:bit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            padding: 1em 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        main {
+            margin-top: 50px;
+        }
+        .content {
+            text-align: left;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>micro:bit Space Invaders</h1>
-  </header>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#installation">Installation</a>
-    <a href="#gameplay">Gameplay</a>
-    <a href="#contributing">Contributing</a>
-  </nav>
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>This repository contains a version of the classic Space Invaders game adapted for the BBC micro:bit platform.</p>
-    </section>
-    <section id="installation">
-      <h2>Installation</h2>
-      <p>1. Download the latest microbit-Space-Invaders.hex file from the Releases page.</p>
-      <p>2. Connect the micro:bit to your computer using the Micro USB cable.</p>
-      <p>3. Drag and drop the microbit-Space-Invaders.hex file onto the micro:bit drive.</p>
-    </section>
-    <section id="gameplay">
-      <h2>Gameplay</h2>
-      <p>The objective is to shoot down as many alien invaders as possible before they reach the bottom of the screen. The alien invaders will fall down the screen at an increasing speed, and the player must use the left and right buttons to move their ship and the shake gesture to shoot.</p>
-      <p>When the player's ship is destroyed, their final score is displayed on the micro:bit's LED display.</p>
-    </section>
-    <section id="contributing">
-      <h2>Contributing</h2>
-      <p>If you would like to contribute to the development of this micro:bit Space Invaders game, please feel free to submit a pull request. We welcome bug fixes, new features, and improvements to the existing codebase.</p>
-    </section>
-  </main>
-  <footer>
-    <p>made with love by verybrickednexus5x</p>
-  </footer>
+    <header>
+        <h1>Space Invaders for BBC Micro:bit</h1>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>Welcome to Space Invaders!</h2>
+            <p>This is a version of the classic <strong>Space Invaders</strong> game adapted for the BBC Micro:bit platform.</p>
+            
+            <h3>Installation</h3>
+            <p>To get started, download the latest <strong>microbit-Space-Invaders.hex</strong> file from the Releases page.</p>
+            <p>1. Connect your micro:bit to your computer using the Micro USB cable.<br>
+               2. Drag and drop the <strong>microbit-Space-Invaders.hex</strong> file onto the micro:bit drive.</p>
+            
+            <h3>Controls</h3>
+            <ul>
+                <li><strong>Move left:</strong> Button A</li>
+                <li><strong>Move right:</strong> Button B</li>
+                <li><strong>Shoot:</strong> Shake the micro:bit</li>
+            </ul>
+
+            <h3>Gameplay</h3>
+            <p>The objective is to shoot down as many alien invaders as possible before they reach the bottom of the screen. The alien invaders will fall down the screen at an increasing speed. Use the left and right buttons to move your ship, and shake the micro:bit to shoot.</p>
+            
+            <h3>Scoring</h3>
+            <p>When your ship is destroyed, your final score will be displayed on the micro:bit's LED display.</p>
+
+            <h3>Contributing</h3>
+            <p>If you'd like to contribute to this game, feel free to submit a pull request. We're happy to receive bug fixes, new features, and improvements to the codebase.</p>
+            
+            <a href="https://github.com/verybrickednexus5x/space-invaders" class="btn" target="_blank">Visit GitHub Repo</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>made with love</p>
+    </footer>
 </body>
 </html>
