@@ -1,92 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>micro:bit Space Invaders</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: #333;
-      text-decoration: none;
-      padding: 10px;
-      margin: 5px;
-    }
-    nav a:hover {
-      background-color: #333;
-      color: #fff;
-    }
-    main {
-      padding: 20px;
-    }
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-    #microbit-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - BBC Micro:bit</title>
+    <style>
+        @import url('https://fonts.cdnjs.com/css?family=Inter:400,600,700&display=swap');
+        
+        :root {
+            --primary-color: #0066ff;
+            --secondary-color: #111827;
+            --accent-color: #10b981;
+            --text-color: #333;
+            --background: #ffffff;
+            --card-bg: #f9fafb;
+            --light-gray: #e5e7eb;
+            --heading-color: #111827;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: var(--background);
+            padding: 2rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-icon::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            bottom: 5px;
+            left: 10px;
+            background-color: white;
+        }
+        
+        .logo-icon::after {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            top: 10px;
+            left: 18px;
+            background-color: white;
+            animation: shoot 2s infinite;
+        }
+        
+        @keyframes shoot {
+            0% { top: 10px; opacity: 1; }
+            100% { top: -8px; opacity: 0; }
+        }
+        
+        h1 {
+            font-weight: 700;
+            color: var(--heading-color);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .header-cta {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        main {
+            flex: 1;
+            padding: 4rem 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+            max-width: 600px;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        h3 .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-color);
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        h3 .icon::before, h3 .icon::after {
+            content: "";
+            position: absolute;
+            background-color: white;
+        }
+        
+        .controls .icon::before {
+            width: 12px;
+            height: 2px;
+            top: 11px;
+            left: 6px;
+        }
+        
+        .controls .icon::after {
+            height: 12px;
+            width: 2px;
+            top: 6px;
+            left: 11px;
+        }
+        
+        .installation .icon::before {
+            width: 14px;
+            height: 8px;
+            top: 8px;
+            left: 5px;
+            border-radius: 1px;
+        }
+        
+        .installation .icon::after {
+            width: 6px;
+            height: 4px;
+            bottom: 4px;
+            left: 9px;
+            border-radius: 1px;
+        }
+        
+        .gameplay .icon::before {
+            width: 10px;
+            height: 10px;
+            top: 7px;
+            left: 7px;
+            transform: rotate(45deg);
+        }
+        
+        .contributing .icon::before {
+            width: 10px;
+            height: 2px;
+            top: 11px;
+            left: 7px;
+        }
+        
+        .contributing .icon::after {
+            height: 10px;
+            width: 2px;
+            top: 7px;
+            left: 11px;
+        }
+        
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        strong {
+            color: var(--heading-color);
+            font-weight: 600;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #0052cc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f9fafb;
+            color: #0052cc;
+        }
+        
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: var(--card-bg);
+            color: #6b7280;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>micro:bit Space Invaders</h1>
-  </header>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#installation">Installation</a>
-    <a href="#gameplay">Gameplay</a>
-    <a href="#contributing">Contributing</a>
-  </nav>
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>This repository contains a version of the classic Space Invaders game adapted for the BBC micro:bit platform.</p>
-    </section>
-    <section id="installation">
-      <h2>Installation</h2>
-      <p>1. Download the latest microbit-Space-Invaders.hex file from the Releases page.</p>
-      <p>2. Connect the micro:bit to your computer using the Micro USB cable.</p>
-      <p>3. Drag and drop the microbit-Space-Invaders.hex file onto the micro:bit drive.</p>
-    </section>
-    <section id="gameplay">
-      <h2>Gameplay</h2>
-      <p>The objective is to shoot down as many alien invaders as possible before they reach the bottom of the screen. The alien invaders will fall down the screen at an increasing speed, and the player must use the left and right buttons to move their ship and the shake gesture to shoot.</p>
-      <p>When the player's ship is destroyed, their final score is displayed on the micro:bit's LED display.</p>
-    </section>
-    <section id="contributing">
-      <h2>Contributing</h2>
-      <p>If you would like to contribute to the development of this micro:bit Space Invaders game, please feel free to submit a pull request. We welcome bug fixes, new features, and improvements to the existing codebase.</p>
-    </section>
-    
-    <!-- Embed the Micro:bit Emulator -->
-    <section id="microbit-container">
-      <h2>Try the Game on a Micro:bit Emulator</h2>
-      <!-- MakeCode micro:bit Emulator Embed -->
-      <iframe width="440" height="320" src="https://makecode.microbit.org/--embed?url=https://github.com/verybrickednexus5x/space-invaders/raw/main/microbit-Space-Invaders.hex" frameborder="0"></iframe>
-      <p>Click the "Download" button in the emulator to run the game on your real micro:bit.</p>
-    </section>
-  </main>
-  <footer>
-    <p>made with love by verybrickednexus5x</p>
-  </footer>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <h1>Space Invaders</h1>
+            </div>
+            <div class="header-cta">
+                <a href="https://github.com/verybrickednexus5x/space-invaders" class="btn btn-secondary" target="_blank">View on GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h2>Classic Space Invaders for BBC Micro:bit</h2>
+                <p>Experience the iconic arcade game reimagined for the micro:bit platform</p>
+                <a href="https://github.com/verybrickednexus5x/space-invaders/releases/download/v1.1/microbit-Space-Invaders.hex" class="btn btn-large">Download Game</a>
+            </div>
+            
+            <div class="content">
+                <div class="card installation">
+                    <h3><span class="icon"></span> Installation</h3>
+                    <p>Getting started is quick and easy with just two simple steps:</p>
+                    <ol>
+                        <li>Connect your micro:bit to your computer using the Micro USB cable</li>
+                        <li>Download and drag the <strong>microbit-Space-Invaders.hex</strong> file onto the micro:bit drive</li>
+                    </ol>
+                    <a href="https://github.com/verybrickednexus5x/space-invaders/releases/download/v1.1/microbit-Space-Invaders.hex" class="btn">Download .hex File</a>
+                </div>
+                
+                <div class="card controls">
+                    <h3><span class="icon"></span> Controls</h3>
+                    <p>Simple and intuitive controls make the game easy to play:</p>
+                    <ul>
+                        <li><strong>Move left:</strong> Press Button A</li>
+                        <li><strong>Move right:</strong> Press Button B</li>
+                        <li><strong>Shoot:</strong> Shake the micro:bit</li>
+                    </ul>
+                    <p>The LED display provides visual feedback for all your movements and actions in the game.</p>
+                </div>
+                
+                <div class="card gameplay">
+                    <h3><span class="icon"></span> Gameplay</h3>
+                    <p>Defend against the alien invasion with your spaceship:</p>
+                    <ul>
+                        <li>Alien invaders fall from the top of the screen</li>
+                        <li>They increase in speed as the game progresses</li>
+                        <li>Move your ship and shoot to destroy them</li>
+                        <li>Avoid letting aliens reach the bottom</li>
+                    </ul>
+                    <p>When your ship is destroyed, your final score will be displayed on the LED screen.</p>
+                </div>
+                
+                <div class="card contributing">
+                    <h3><span class="icon"></span> Contributing</h3>
+                    <p>We welcome contributions to make this game even better:</p>
+                    <ul>
+                        <li>Bug fixes and performance improvements</li>
+                        <li>New features and gameplay mechanics</li>
+                        <li>Code quality enhancements</li>
+                        <li>Documentation improvements</li>
+                    </ul>
+                    <a href="https://github.com/verybrickednexus5x/space-invaders" class="btn" target="_blank">GitHub Repository</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>Built with care for micro:bit enthusiasts</p>
+        </div>
+    </footer>
 </body>
 </html>
