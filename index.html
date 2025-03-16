@@ -1,92 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>micro:bit Space Invaders</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: #333;
-      text-decoration: none;
-      padding: 10px;
-      margin: 5px;
-    }
-    nav a:hover {
-      background-color: #333;
-      color: #fff;
-    }
-    main {
-      padding: 20px;
-    }
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-    #microbit-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - BBC Micro:bit</title>
+    <style>
+        @import url('https://fonts.cdnjs.com/css?family=Press+Start+2P|Roboto:400,700&display=swap');
+        
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #222;
+            --accent-color: #7700ff;
+            --text-color: #eee;
+            --dark-bg: #111;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                radial-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            padding: 1.5em 0;
+            border-bottom: 4px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before, header::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary-color);
+            animation: scanner 4s infinite linear;
+            opacity: 0.5;
+        }
+        
+        @keyframes scanner {
+            0% { left: -100px; }
+            100% { left: 100%; }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--primary-color);
+            text-shadow: 3px 3px 0 var(--accent-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .content {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 0 1rem;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin: 1.5rem 0 1rem 0;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+        
+        p, li {
+            margin-bottom: 1rem;
+        }
+        
+        strong {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin-left: 1rem;
+        }
+        
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        ul li::before {
+            content: ">";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+        }
+        
+        .game-description {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+            margin-top: 2rem;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>micro:bit Space Invaders</h1>
-  </header>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#installation">Installation</a>
-    <a href="#gameplay">Gameplay</a>
-    <a href="#contributing">Contributing</a>
-  </nav>
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>This repository contains a version of the classic Space Invaders game adapted for the BBC micro:bit platform.</p>
-    </section>
-    <section id="installation">
-      <h2>Installation</h2>
-      <p>1. Download the latest microbit-Space-Invaders.hex file from the Releases page.</p>
-      <p>2. Connect the micro:bit to your computer using the Micro USB cable.</p>
-      <p>3. Drag and drop the microbit-Space-Invaders.hex file onto the micro:bit drive.</p>
-    </section>
-    <section id="gameplay">
-      <h2>Gameplay</h2>
-      <p>The objective is to shoot down as many alien invaders as possible before they reach the bottom of the screen. The alien invaders will fall down the screen at an increasing speed, and the player must use the left and right buttons to move their ship and the shake gesture to shoot.</p>
-      <p>When the player's ship is destroyed, their final score is displayed on the micro:bit's LED display.</p>
-    </section>
-    <section id="contributing">
-      <h2>Contributing</h2>
-      <p>If you would like to contribute to the development of this micro:bit Space Invaders game, please feel free to submit a pull request. We welcome bug fixes, new features, and improvements to the existing codebase.</p>
-    </section>
-    
-    <!-- Embed the Micro:bit Emulator -->
-    <section id="microbit-container">
-      <h2>Try the Game on a Micro:bit Emulator</h2>
-      <!-- MakeCode micro:bit Emulator Embed -->
-      <iframe width="440" height="320" src="https://makecode.microbit.org/--embed?url=https://github.com/verybrickednexus5x/space-invaders/raw/main/path-to-your-hex-file/microbit-Space-Invaders.hex" frameborder="0"><https://raw.githubusercontent.com/verybrickednexus5x/space-invaders/main/microbit-Space-Invaders.hex>
-      <p>Click the "Download" button in the emulator to run the game on your real micro:bit.</p>
-    </section>
-  </main>
-  <footer>
-    <p>made with love by verybrickednexus5x</p>
-  </footer>
+    <header>
+        <h1>Space Invaders for BBC Micro:bit</h1>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>Welcome to Space Invaders!</h2>
+            <p>This is a version of the classic <strong>Space Invaders</strong> game adapted for the BBC Micro:bit platform.</p>
+            
+            <div class="game-description">
+                Defend Earth from alien invaders on your micro:bit!
+            </div>
+            
+            <h3>Installation</h3>
+            <p>To get started, download the latest <strong>microbit-Space-Invaders.hex</strong> file from the Releases page.</p>
+            <ol>
+                <li>Connect your micro:bit to your computer using the Micro USB cable.</li>
+                <li>Drag and drop the <strong>microbit-Space-Invaders.hex</strong> file onto the micro:bit drive.</li>
+            </ol>
+            
+            <h3>Controls</h3>
+            <ul>
+                <li><strong>Move left:</strong> Button A</li>
+                <li><strong>Move right:</strong> Button B</li>
+                <li><strong>Shoot:</strong> Shake the micro:bit</li>
+            </ul>
+
+            <h3>Gameplay</h3>
+            <p>The objective is to shoot down as many alien invaders as possible before they reach the bottom of the screen. The alien invaders will fall down the screen at an increasing speed. Use the left and right buttons to move your ship, and shake the micro:bit to shoot.</p>
+            
+            <h3>Scoring</h3>
+            <p>When your ship is destroyed, your final score will be displayed on the micro:bit's LED display.</p>
+
+            <h3>Contributing</h3>
+            <p>If you'd like to contribute to this game, feel free to submit a pull request. We're happy to receive bug fixes, new features, and improvements to the codebase.</p>
+            
+            <div class="actions">
+                <a href="https://github.com/verybrickednexus5x/space-invaders" class="btn" target="_blank">Visit GitHub Repo</a>
+                <a href="#" class="btn">Download Game</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with &lt;3 for micro:bit gamers</p>
+    </footer>
 </body>
 </html>
