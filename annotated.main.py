@@ -1,3 +1,4 @@
+#when a is pressed, move the ship left
 def on_button_pressed_a():
     ship.move(-1)
 input.on_button_pressed(Button.A, on_button_pressed_a)
@@ -7,7 +8,7 @@ def End_Sound():
         music.play(music.string_playable("C5 B A G F E D C ", 1200),
             music.PlaybackMode.UNTIL_DONE)
 
-#when button a is pressed, move the sprite left and if the bullet is touching enemy, add a point.
+#when both a and b are pressed, shoot a bullet and if the bullet hits the enemy, add a point.
 def on_button_pressed_ab():
     global shoot
     shoot = game.create_sprite(ship.get(LedSpriteProperty.X), ship.get(LedSpriteProperty.Y))
