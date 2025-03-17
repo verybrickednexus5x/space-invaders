@@ -7,6 +7,7 @@ def End_Sound():
         music.play(music.string_playable("C5 B A G F E D C ", 1200),
             music.PlaybackMode.UNTIL_DONE)
 
+#when button a is pressed, move the sprite left and if the bullet is touching enemy, add a point.
 def on_button_pressed_ab():
     global shoot
     shoot = game.create_sprite(ship.get(LedSpriteProperty.X), ship.get(LedSpriteProperty.Y))
@@ -23,6 +24,7 @@ def on_button_pressed_ab():
     shoot.delete()
 input.on_button_pressed(Button.AB, on_button_pressed_ab)
 
+#on button b being pressed, move the character right
 def on_button_pressed_b():
     ship.move(1)
 input.on_button_pressed(Button.B, on_button_pressed_b)
@@ -33,6 +35,7 @@ ship: game.LedSprite = None
 ship = game.create_sprite(2, 4)
 game.set_score(0)
 
+#create an enemy
 def on_forever():
     global enemy
     enemy = game.create_sprite(randint(0, 4), 0)
@@ -46,6 +49,7 @@ def on_forever():
         enemy.delete()
 basic.forever(on_forever)
 
+#end the game if the enemy hits the ship
 def on_forever2():
     if enemy.is_touching(ship):
         game.game_over()
