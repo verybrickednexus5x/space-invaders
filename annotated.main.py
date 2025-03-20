@@ -38,7 +38,7 @@ ship: game.LedSprite = None
 ship = game.create_sprite(2, 4)
 game.set_score(0)
 
-#create an enemy
+#create an enemy and make sure it spawns in the right place.
 def on_forever():
     global enemy
     enemy = game.create_sprite(randint(0, 4), 0)
