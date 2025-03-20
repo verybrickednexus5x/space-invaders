@@ -3,6 +3,7 @@ def on_button_pressed_a():
     ship.move(-1)
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
+#play a sound at death
 def End_Sound():
     for index in range(8):
         music.play(music.string_playable("C5 B A G F E D C ", 1200),
@@ -30,6 +31,7 @@ def on_button_pressed_b():
     ship.move(1)
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
+#create sprites
 enemy: game.LedSprite = None
 shoot: game.LedSprite = None
 ship: game.LedSprite = None
